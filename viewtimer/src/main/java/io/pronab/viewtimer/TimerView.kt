@@ -1,44 +1,43 @@
 package io.pronab.viewtimer
 
 import android.app.Activity
+import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import java.util.*
 
-/*
-class TimerView() {
+//this class will be extended to bring native effects in startTime and endTime implemented
+// within the lib
 
-   fun start(radio: View, vv: ViewGroup, act: Activity)
-    {
-       // var tv = radio
-        var currC = 0
-      //  var vv = show
-        val timer = Timer()
-        timer.schedule(
-            object : TimerTask() {
-                override fun run() {
-                    act.runOnUiThread {
-                        // do UI updates here
-                        (radio as TextView).setText("...........Greetings.......");
-                        if (currC == 0) {
-                            radio.setBackgroundColor(Color.BLUE);
-                            vv.setBackgroundColor(Color.CYAN)
-                            currC = 9
-                        } else {
-                            radio.setBackgroundColor(Color.RED);
-                            vv.setBackgroundColor(Color.GRAY)
-                            currC = 0
-                        }
+class TimerView(private val vv: ViewGroup, private val radio: View, private val act: Activity) {
+    // var tv = radio
+    var currC = 0
+    //  var vv = show
+    val timer = Timer()
+    public fun  start() {
+    timer.schedule(
+    object : TimerTask() {
+        override fun run() {
+            act.runOnUiThread {
 
 
-                    }
+                if (currC == 0) {
+
+                    (act as ViewTimerInterface).startTime()
+
+                    currC = 9
+                } else {
+
+                    (act as ViewTimerInterface).endTime()
+                    currC = 0
                 }
-            }, 500, 5000
-        )
-    }
-}
-*/
 
-class TimerView(vv: ViewGroup, tv: TextView, mainActivity: Activity) {
 
+            }
+        }
+    }, (act as ViewTimerInterface).getDelay(), (act as ViewTimerInterface).getPeriod()
+    )
 }
+}
+
+
 
